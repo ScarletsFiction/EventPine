@@ -1,0 +1,17 @@
+{
+  "name": "eventpine",
+  "description": "A simple extendable event emitter class",
+  "version": "1.0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ScarletsFiction/EventPine.git"
+  },
+  "author": "ScarletsFiction",
+  "license": "MIT",
+  "main": "eventpine.js",
+  "keywords": [
+    "event",
+    "event-emitter",
+    "event-class"
+  ]
+}
