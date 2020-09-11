@@ -1,10 +1,10 @@
 <a href='https://patreon.com/stefansarya'><img src='https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2Fstefansarya%2Fpledges&style=for-the-badge' height='20'></a>
 [![Software License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![](https://data.jsdelivr.com/v1/package/npm/eventpine/badge)](https://www.jsdelivr.com/package/npm/eventpine)
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=EventPine%20is%20a%20simple%20extendable%20event%20trigger%20class&url=https://github.com/ScarletsFiction/EventPine&via=github&hashtags=eventpine,browser,node,deno)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=EventPine%20is%20a%20simple%20extendable%20event%20emitter%20class&url=https://github.com/ScarletsFiction/EventPine&via=github&hashtags=eventpine,browser,node,deno)
 
 # EventPine
-A simple extendable event trigger class for Deno, Node, and Browser.
+A simple extendable event emitter class for Deno, Node, and Browser.
 
 ### Getting Started
 Before we start to use EventPine we need to import it first.
