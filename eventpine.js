@@ -1,8 +1,7 @@
 class EventPine{
-	on(eventName, func, options){
-		if(this._event === void 0)
-			Object.defineProperty(this, '_event', {value:{}});
+	events = {};
 
+	on(eventName, func, options){
 		if(options === void 0)
 			options = {};
 
@@ -24,12 +23,22 @@ class EventPine{
 		}
 		else func.on = true;
 
-		var evs = this._event[eventName];
-		if(evs === void 0)
-			evs = this._event[eventName] = [];
+		if(eventName === '*') eventName = '_any';
 
-		if(!evs.includes(func))
+		var evs = this.events[eventName];
+		if(evs === void 0){
+			evs = this.events[eventName] = [];
+
+			if(this.events['event.new.name'] !== void 0) // Internal Event
+				this.emit('event.new.name', EventPine.ignoreInternal, eventName);
+		}
+
+		if(!evs.includes(func)){
 			evs.push(func);
+
+			if(this.events['event.new.callback'] !== void 0) // Internal Event
+				this.emit('event.new.callback', EventPine.ignoreInternal, eventName);
+		}
 
 		return this;
 	}
@@ -40,6 +49,14 @@ class EventPine{
 	}
 
 	off(eventName, func){
+		if(eventName === void 0){
+			if(this.events['event.deleted'] !== void 0) // Internal Event
+				this.emit('event.deleted', EventPine.ignoreInternal);
+
+			this.events = {};
+			return this;
+		}
+
 		if(eventName.includes(' ')){
 			eventName = eventName.split(' ');
 
@@ -51,16 +68,21 @@ class EventPine{
 			return this;
 		}
 
-		if(this._event === void 0 || this._event[eventName] === void 0)
+		if(eventName === '*') eventName = '_any';
+		if(this.events[eventName] === void 0)
 			return this;
 
 		var evs;
 		if(func === void 0){
-			delete this._event[eventName];
+			delete this.events[eventName];
+
+			if(this.events['event.deleted'] !== void 0) // Internal Event
+				this.emit('event.deleted', EventPine.ignoreInternal, eventName);
+
 			return this;
 		}
 		else{
-			evs = this._event[eventName];
+			evs = this.events[eventName];
 			while(true){
 				var i = evs.indexOf(func);
 				if(i === -1)
@@ -70,16 +92,23 @@ class EventPine{
 			}
 		}
 
-		if(evs.length === 0)
-			delete this._event[eventName];
+		if(evs.length === 0){
+			delete this.events[eventName];
+
+			if(this.events['event.deleted'] !== void 0) // Internal Event
+				this.emit('event.deleted', EventPine.ignoreInternal, eventName);
+		}
+
 		return this;
 	}
 
 	emit(eventName, a,b,c,d,e){ // Max args = 5
-		if(this._event === void 0)
-			return false;
+		if(this.events._any !== void 0
+		   && a !== EventPine.ignoreInternal
+		   && eventName !== '_any')
+			this.emit.call(this, '_any', a,b,c,d,e);
 
-		var evs = this._event[eventName];
+		var evs = this.events[eventName];
 		if(evs === void 0 || evs.length === 0)
 			return false;
 
@@ -103,10 +132,10 @@ class EventPine{
 	}
 }
 
+EventPine.ignoreInternal = {};
+
 if(typeof exports === 'object' && typeof module !== 'undefined')
 	module.exports = EventPine;
 else if(typeof window !== 'undefined')
 	window.EventPine = EventPine;
-else if(typeof this !== 'undefined')
-	this.EventPine = EventPine;
-else console.error("It seems EventPine doesn't know on how to expose the class");
+else this.EventPine = EventPine;
