@@ -92,11 +92,11 @@ There are some internal event that may be useful.
 
 |EventName|Arguments|Description|
 |---|---|---|
-|`*`|...|Wildcards event, everytime `emit` was called|
+|`*`|EventName, ...|Wildcards event, everytime `emit` was called|
 
 ```js
 obj.on('*', function(...){
-	// Do stuff
+  // Do stuff
 });
 ```
 

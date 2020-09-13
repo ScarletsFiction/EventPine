@@ -106,7 +106,7 @@ class EventPine{
 		if(this.events._any !== void 0
 		   && a !== EventPine.ignoreInternal
 		   && eventName !== '_any')
-			this.emit.call(this, '_any', a,b,c,d,e);
+			this.emit.call(this, '_any', eventName, a,b,c,d);
 
 		var evs = this.events[eventName];
 		if(evs === void 0 || evs.length === 0)
