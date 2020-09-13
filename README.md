@@ -12,7 +12,7 @@ Before we start to use EventPine we need to import it first.
 #### Deno
 Put this on your first line
 ```js
-import 'https://cdn.jsdelivr.net/npm/eventpine@1.0.2';
+import 'https://x.nest.land/EventPine@1.0.2/mod.js';
 ```
 
 #### Node
@@ -29,21 +29,15 @@ let EventPine = require('eventpine');
 #### Browser
 Put this on HTML `<head>`
 ```xml
-<script src="https://cdn.jsdelivr.net/npm/eventpine@1.0.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/eventpine@latest"></script>
 ```
 
 ### How to use
-EventPine have 4 main function and it can be extended with your class.
+EventPine can be extended with your custom class.
 
 ```js
-// Custom class with EventPine
-class MyCustom extends EventPine{
-  constructor(){
-    // Init my custom class (optional)
-  }
-}
-
-// Create with your class
+// Custom class with EventPine (Optional)
+class MyCustom extends EventPine{/* ... */}
 var obj = new MyCustom();
 
 // Or just create from the root
@@ -74,10 +68,17 @@ obj.once('message' /* EventName */, function(data1, data2){
 Remove event listener registered by on/once.
 
 ```js
-obj.off('message' /* EventName */, Function /* Optional */);
+// Remove specific callback listener to this event
+obj.off('message', myFunction);
+
+// Remove all event listener to this event name
+obj.off('message');
+
+// Clear all event including the internal event
+obj.off();
 ```
 
-If the second argument was empty, every callback related to this EventName will be removed.
+If the second argument was empty, every callback related to this EventName will be removed.<br>
 
 ### Emit
 Emit to events that was registered.
@@ -85,6 +86,21 @@ Emit to events that was registered.
 ```js
 obj.emit('message' /* EventName */, 'data1', 'data2', ...);
 ```
+
+## Internal Event
+There are some internal event that may be useful.
+
+|EventName|Arguments|Description|
+|---|---|---|
+|`*`|...|Wildcards event, everytime `emit` was called|
+
+```js
+obj.on('*', function(...){
+	// Do stuff
+});
+```
+
+Instead of wildcard there are another experimental internal event, they're not documented yet because may be changed on the future.
 
 ## Contribution
 If you want to help in EventPine please fork this project and edit on your repository, then make a pull request to here. Otherwise, you can help with donation via [patreon](https://www.patreon.com/stefansarya).
